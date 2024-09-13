@@ -1,6 +1,7 @@
 package controller;
 
-import model.Livro;
+import com.livraria.model.Livro;
+
 import util.AlgoritmoOrdenacao;
 
 public class SistemaGerenciamento {

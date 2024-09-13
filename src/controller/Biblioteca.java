@@ -1,6 +1,6 @@
 package controller;
 
-import model.Livro;
+import com.livraria.model.Livro;
 
 public class Biblioteca {
     private Livro[] livros;
