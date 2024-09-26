@@ -1,14 +1,10 @@
 package com.livraria.ui;
 
-
-
 import util.Ordenacao;
-import java.util.List;
 import java.util.Scanner;
+import java.util.List;
 import com.livraria.model.Livro;
 import com.livraria.service.AcervoService;
-
-
 
 public class InterfaceUsuario {
     private static AcervoService acervoService = new AcervoService();
@@ -24,10 +20,11 @@ public class InterfaceUsuario {
             System.out.println("5. Buscar Livro por Título");
             System.out.println("6. Buscar Livro por Autor");
             System.out.println("7. Buscar Livro por Ano de Publicação");
-            System.out.println("8. Sair");
+            System.out.println("8. Recomendar Livros por Autor");
+            System.out.println("9. Sair");
 
             int escolha = scanner.nextInt();
-            scanner.nextLine();  // Consumir a nova linha
+            scanner.nextLine();  
 
             switch (escolha) {
                 case 1:
@@ -56,6 +53,9 @@ public class InterfaceUsuario {
                     buscarLivroPorAnoPublicacao();
                     break;
                 case 8:
+                    recomendarLivrosPorAutor();
+                    break;
+                case 9:
                     executando = false;
                     break;
                 default:
@@ -71,14 +71,14 @@ public class InterfaceUsuario {
         String autor = scanner.nextLine();
         System.out.println("Digite o ano de publicação:");
         int anoPublicacao = scanner.nextInt();
-        scanner.nextLine();  // Consumir a nova linha
+        scanner.nextLine();  
 
         Livro livro = new Livro(titulo, autor, anoPublicacao);
         acervoService.adicionarLivro(livro);
         System.out.println("Livro adicionado com sucesso!");
     }
 
-    // Método para buscar e imprimir livro por título
+   
     private static void buscarLivroPorTitulo() {
         System.out.println("Digite o título do livro que deseja buscar:");
         String titulo = scanner.nextLine();
@@ -93,26 +93,24 @@ public class InterfaceUsuario {
         }
     }
 
-    // Método para buscar e imprimir livro por autor
+ 
     private static void buscarLivroPorAutor() {
         System.out.println("Digite o nome do autor que deseja buscar:");
         String autor = scanner.nextLine();
-        List<Livro> resultados = acervoService.buscarLivroPorAutor(autor);
-        if (resultados.isEmpty()) {
-            System.out.println("Nenhum livro encontrado com esse autor.");
-        } else {
-            System.out.println("Resultado(s) da busca por autor:");
-            for (Livro livro : resultados) {
-                System.out.println(livro);
-            }
-        }
+        acervoService.buscarLivroPorAutor(autor);
     }
 
-    // Método para buscar e imprimir livro por ano de publicação
+
+    private static void recomendarLivrosPorAutor() {
+        System.out.println("Digite o nome do autor para obter recomendações:");
+        String autor = scanner.nextLine();
+        acervoService.recomendarLivrosPorAutor(autor);
+    }
+
+
     private static void buscarLivroPorAnoPublicacao() {
         System.out.println("Digite o ano de publicação do livro que deseja buscar:");
         int anoPublicacao = scanner.nextInt();
-        scanner.nextLine();  // Consumir a nova linha
         List<Livro> resultados = acervoService.buscarLivroPorAno(anoPublicacao);
         if (resultados.isEmpty()) {
             System.out.println("Nenhum livro encontrado com esse ano de publicação.");
